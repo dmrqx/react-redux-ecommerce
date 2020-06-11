@@ -6,8 +6,13 @@ import 'core-js/es/set'
 import 'raf/polyfill'
 
 import App from '@analogica/components/App'
+import Store from '@analogica/store'
 
-const rootComponent = <App />
+const rootComponent = (
+  <Store>
+    <App />
+  </Store>
+)
 const rootElement = document.getElementById('app')
 
 render(rootComponent, rootElement)
