@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch as useReduxDispatch, useSelector } from 'react-redux'
 import { node } from 'prop-types'
 
+import { receiveCatalog, requestCatalog } from '@analogica/store/thunks'
 import catalogRequest from '@analogica/services/catalogRequest'
 import CatalogContext from './'
 
@@ -8,24 +10,20 @@ const propTypes = {
   children: node.isRequired
 }
 
-const catalogInitialState = {
-  status: 'idle',
-  error: false,
-  products: []
-}
-
 export default function CatalogProvider ({ children }) {
-  const [catalog, setCatalog] = useState(catalogInitialState)
+  const dispatch = useReduxDispatch()
+  const catalog = useSelector(state => state.catalog)
 
   useEffect(() => {
     async function fetchCatalog () {
       const payload = await catalogRequest()
 
-      setCatalog(payload)
+      dispatch(receiveCatalog({ ...payload }))
     }
 
+    dispatch(requestCatalog())
     fetchCatalog()
-  }, [])
+  }, [dispatch])
 
   return (
     <CatalogContext.Provider value={catalog}>
