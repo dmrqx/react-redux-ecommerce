@@ -1,0 +1,5 @@
+export { default as Home } from './Home/Home'
+export { default as ProductDetail } from './ProductDetail/ProductDetail'
+export { default as ProductsList } from './ProductsList/ProductsList'
+export { default as Search } from './Search/Search'
+export { default as ShoppingBag } from './ShoppingBag/ShoppingBag'
